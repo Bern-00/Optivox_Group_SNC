@@ -1,0 +1,541 @@
+/* ============================================
+   OPTIVOX GROUP - Premium Design System
+   ============================================ */
+
+/* CSS Custom Properties */
+:root {
+  /* Gold Palette - Extracted from logo */
+  --gold-50: #fdf8ef;
+  --gold-100: #f9edcf;
+  --gold-200: #f2d89e;
+  --gold-300: #e9bf65;
+  --gold-400: #e2a83e;
+  --gold-500: #d4912a;
+  --gold-600: #c17821;
+  --gold-700: #a25c1d;
+  --gold-800: #84491f;
+  --gold-900: #6d3d1c;
+
+  /* Premium Gold Gradients */
+  --gradient-gold: linear-gradient(135deg, #c8a44e 0%, #e8d48b 25%, #d4a843 50%, #c8a44e 75%, #a8832a 100%);
+  --gradient-gold-text: linear-gradient(135deg, #e8d48b 0%, #c8a44e 50%, #a8832a 100%);
+  --gradient-gold-shine: linear-gradient(90deg, transparent 0%, rgba(232, 212, 139, 0.4) 50%, transparent 100%);
+  --gradient-dark: linear-gradient(180deg, #0a0a0a 0%, #141414 50%, #0a0a0a 100%);
+  --gradient-hero: radial-gradient(ellipse at center, rgba(200, 164, 78, 0.08) 0%, transparent 70%);
+
+  /* Dark Theme Colors */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  --bg-card: rgba(20, 20, 20, 0.8);
+  --bg-card-hover: rgba(30, 30, 30, 0.9);
+  --bg-glass: rgba(20, 20, 20, 0.6);
+
+  /* Text Colors */
+  --text-primary: #f5f5f5;
+  --text-secondary: #a0a0a0;
+  --text-tertiary: #666666;
+  --text-gold: #c8a44e;
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-gold: rgba(200, 164, 78, 0.3);
+  --border-gold-strong: rgba(200, 164, 78, 0.6);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
+  --shadow-gold: 0 0 30px rgba(200, 164, 78, 0.15);
+  --shadow-gold-glow: 0 0 60px rgba(200, 164, 78, 0.2);
+
+  /* Typography */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing */
+  --section-padding: clamp(60px, 10vw, 120px);
+  --container-max: 1200px;
+  --container-wide: 1400px;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+}
+
+/* ============================================
+   Light Theme Overrides
+   ============================================ */
+[data-theme="light"] {
+  --bg-primary: #f9f9f7;
+  --bg-secondary: #f0efeb;
+  --bg-tertiary: #e8e6e0;
+  --bg-card: rgba(255, 255, 253, 0.92);
+  --bg-card-hover: rgba(255, 255, 253, 0.98);
+  --bg-glass: rgba(255, 255, 253, 0.75);
+
+  --text-primary: #0d0d0a;
+  --text-secondary: #4a4a42;
+  --text-tertiary: #888880;
+  --text-gold: #8a6020;
+
+  --border-subtle: rgba(0, 0, 0, 0.07);
+  --border-gold: rgba(138, 96, 32, 0.28);
+  --border-gold-strong: rgba(138, 96, 32, 0.55);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.13);
+  --shadow-gold: 0 0 30px rgba(138, 96, 32, 0.1);
+  --shadow-gold-glow: 0 0 60px rgba(138, 96, 32, 0.12);
+
+  --gradient-gold: linear-gradient(135deg, #a07030 0%, #c8a44e 25%, #9a6828 50%, #a07030 75%, #7a5020 100%);
+  --gradient-gold-text: linear-gradient(135deg, #c8a44e 0%, #9a6828 50%, #7a5020 100%);
+  --gradient-dark: linear-gradient(180deg, #f9f9f7 0%, #f0efeb 50%, #f9f9f7 100%);
+  --gradient-hero: radial-gradient(ellipse at center, rgba(138, 96, 32, 0.06) 0%, transparent 70%);
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  color: inherit;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.container-wide {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: var(--section-padding) 0;
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-gold);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Gold Text Gradient */
+.text-gold {
+  background: var(--gradient-gold-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 32px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-gold-shine);
+  transition: left 0.6s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  background: var(--gradient-gold);
+  color: #0a0a0a;
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold-glow);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-gold);
+  border: 1px solid var(--border-gold);
+}
+
+.btn-secondary:hover {
+  background: rgba(200, 164, 78, 0.1);
+  border-color: var(--border-gold-strong);
+  transform: translateY(-2px);
+}
+
+.btn-large {
+  padding: 18px 42px;
+  font-size: 1.05rem;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.form-error {
+  color: #f87171;
+  font-size: 0.9rem;
+  padding: 10px 14px;
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+
+/* ============================================
+   Cards
+   ============================================ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--border-gold) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.card:hover {
+  border-color: var(--border-gold);
+  background: var(--bg-card-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-gold);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(200, 164, 78, 0.1);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+  color: var(--text-gold);
+  transition: all var(--transition-base);
+}
+
+.card:hover .card-icon {
+  background: rgba(200, 164, 78, 0.2);
+  box-shadow: 0 0 20px rgba(200, 164, 78, 0.15);
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.card-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 164, 78, 0.4); }
+  50% { box-shadow: 0 0 20px 10px rgba(200, 164, 78, 0); }
+}
+
+@keyframes rotateGlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Staggered children animations */
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* ============================================
+   Scrollbar Styling
+   ============================================ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-gold);
+}
+
+/* ============================================
+   Dividers
+   ============================================ */
+.divider-gold {
+  width: 80px;
+  height: 2px;
+  background: var(--gradient-gold);
+  margin: 0 auto;
+}
+
+.divider-gold-left {
+  width: 80px;
+  height: 2px;
+  background: var(--gradient-gold);
+}
+
+/* ============================================
+   Grid Layouts
+   ============================================ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .grid-4 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   Selection
+   ============================================ */
+::selection {
+  background: rgba(200, 164, 78, 0.3);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Futuristic Background Watermark Logo
+   ============================================ */
+.cta-vortex-bg {
+  position: absolute;
+  right: -60px;
+  bottom: -60px;
+  width: clamp(200px, 30vw, 360px);
+  height: clamp(200px, 30vw, 360px);
+  opacity: 0.09; /* Subtle gold glow watermark */
+  pointer-events: none;
+  z-index: 0;
+  filter: drop-shadow(0 0 20px rgba(200, 164, 78, 0.25));
+  transition: opacity var(--transition-base);
+}
+
+.about-cta__box:hover .cta-vortex-bg,
+.apply-box:hover .cta-vortex-bg {
+  opacity: 0.14; /* Lights up slightly on box hover for dynamic interaction */
+}
+

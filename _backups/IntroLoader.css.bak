@@ -1,0 +1,88 @@
+/* ============================================
+   INTRO LOADER — full-screen overlay
+   ============================================ */
+
+.intro-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-primary, #0a0a0a);
+  transition: opacity 0.7s cubic-bezier(0.85, 0, 0.15, 1),
+              visibility 0.7s;
+  overflow: hidden;
+}
+
+.intro-loader--fadeout {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ── Background ambiance ── */
+.intro-loader__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.intro-loader__glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(200, 164, 78, 0.10) 0%,
+    rgba(200, 164, 78, 0.02) 50%,
+    transparent 100%
+  );
+  filter: blur(80px);
+  pointer-events: none;
+  animation: intro-pulse-glow 3s ease-in-out infinite;
+}
+
+.intro-loader__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center;
+  mask-image: radial-gradient(circle at center, black 20%, transparent 65%);
+  -webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 65%);
+}
+
+[data-theme="light"] .intro-loader__grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+}
+
+/* ── Content container — NO background, fully transparent ── */
+.intro-loader__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* No background. No border. No box. */
+}
+
+/* ── Keyframes ── */
+@keyframes intro-pulse-glow {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+}

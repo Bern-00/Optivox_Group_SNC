@@ -1,0 +1,90 @@
+/* ============================================
+   THEME TRANSITION OVERLAY
+   ============================================ */
+
+.theme-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: theme-overlay 1.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+.theme-transition--dark  { background-color: #050505; }
+.theme-transition--light { background-color: #f9f9f7; }
+
+/* ── Logo container ─────────────────────────────── */
+.theme-transition__logo-container {
+  position: relative;
+  width: min(560px, 82vw);
+  aspect-ratio: 1024 / 682;
+  user-select: none;
+}
+
+/* Mix blend modes to make dark/light rectangular backgrounds transparent.
+   Must be on the container while clip-path is on children to avoid stacking context isolation. */
+.theme-transition--dark .theme-transition__logo-container {
+  mix-blend-mode: screen;
+}
+
+.theme-transition--light .theme-transition__logo-container {
+  mix-blend-mode: multiply;
+}
+
+/* ── Base Logo layer (O masked out) ── */
+.theme-transition__logo-base {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  /* Clip bottom 34% to hide reflection but keep slogan */
+  clip-path: inset(0 0 34% 0);
+  /* Mask out the Helix O */
+  mask-image: radial-gradient(ellipse 8.25% 11.75% at 69.72% 45%, transparent 97%, black 99%);
+  -webkit-mask-image: radial-gradient(ellipse 8.25% 11.75% at 69.72% 45%, transparent 97%, black 99%);
+}
+
+/* ── Helix O Wrapper — absolute positioning ── */
+.theme-transition__logo-helix-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Clip bottom 34% to hide reflection but keep slogan */
+  clip-path: inset(0 0 34% 0);
+}
+
+/* ── Helix O Inner — handles rotation & masking ── */
+.theme-transition__logo-helix-inner {
+  width: 100%;
+  height: 100%;
+  transform-origin: 69.72% 45%;
+  /* Mask to show ONLY the Helix O */
+  mask-image: radial-gradient(ellipse 8.25% 11.75% at 69.72% 45%, black 97%, transparent 99%);
+  -webkit-mask-image: radial-gradient(ellipse 8.25% 11.75% at 69.72% 45%, black 97%, transparent 99%);
+  animation: theme-helix-spin 2s linear infinite;
+}
+
+.theme-transition__logo-helix-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+/* Rotation Animation */
+@keyframes theme-helix-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Overlay animation ──────────────────────────── */
+@keyframes theme-overlay {
+  0%   { opacity: 1; }
+  75%  { opacity: 1; }
+  100% { opacity: 0; }
+}

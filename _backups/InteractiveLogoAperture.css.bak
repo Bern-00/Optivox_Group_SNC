@@ -1,0 +1,237 @@
+/* Each layer is a transparent, non-overlapping extraction of the source logo. */
+.ila {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 24px;
+}
+
+.ila__logo-container {
+  position: relative;
+  width: min(520px, 80vw);
+  aspect-ratio: 1024 / 682;
+  user-select: none;
+}
+
+.ila__logo-letters,
+.ila__logo-tagline {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition:
+    opacity 0.9s cubic-bezier(0.76, 0, 0.24, 1),
+    transform 0.95s cubic-bezier(0.76, 0, 0.24, 1),
+    filter 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: opacity, transform, filter;
+}
+
+.ila__logo-helix-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition:
+    transform 0.95s cubic-bezier(0.76, 0, 0.24, 1),
+    opacity 0.95s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform;
+}
+
+.ila__logo-helix-inner {
+  width: 100%;
+  height: 100%;
+}
+
+.ila__logo-helix-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: 69.72% 45%;
+  animation: ila-helix-spin 5.5s linear infinite;
+}
+
+@keyframes ila-helix-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.ila__stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  margin-top: 8px;
+  opacity: 0;
+  transform: translateY(15px);
+  transition:
+    opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+}
+
+.ila__stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ila__stat-icon {
+  color: var(--text-gold);
+  filter: drop-shadow(0 0 6px rgba(200, 164, 78, 0.35));
+}
+
+.ila__stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ila__stat-num {
+  font-family: var(--font-body);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.ila__stat-lbl {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  letter-spacing: 0.5px;
+}
+
+.ila__stat-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border-subtle);
+}
+
+.ila--assembled .ila__logo-letters,
+.ila--assembled .ila__logo-tagline {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+  filter: none;
+}
+
+.ila--assembled .ila__logo-helix-wrap {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+.ila--assembled .ila__stats {
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+/* The two sides move under the higher aperture layer. */
+.ila--collapsing .ila__logo-letters--left {
+  opacity: 0;
+  transform: translateX(12%) scale(0.96);
+  filter: blur(3px);
+}
+
+.ila--collapsing .ila__logo-letters--right {
+  opacity: 0;
+  transform: translateX(-12%) scale(0.96);
+  filter: blur(3px);
+}
+
+.ila--collapsing .ila__logo-tagline {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
+  filter: blur(2px);
+}
+
+.ila--collapsing .ila__logo-helix-wrap,
+.ila--spinning .ila__logo-helix-wrap {
+  opacity: 1;
+  transform: translate(-19.72%, 5%) scale(1.18);
+}
+
+.ila--collapsing .ila__logo-helix-img,
+.ila--spinning .ila__logo-helix-img {
+  animation-duration: 2.4s;
+}
+
+.ila--collapsing .ila__stats {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.ila--spinning .ila__logo-letters--left {
+  opacity: 0;
+  transform: translateX(15%) scale(0.94);
+  filter: blur(5px);
+}
+
+.ila--spinning .ila__logo-letters--right {
+  opacity: 0;
+  transform: translateX(-15%) scale(0.94);
+  filter: blur(5px);
+}
+
+.ila--spinning .ila__logo-tagline {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.97);
+  filter: blur(4px);
+}
+
+.ila--spinning .ila__stats {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ila--expanding .ila__logo-letters,
+.ila--expanding .ila__logo-tagline {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+  filter: none;
+}
+
+.ila--expanding .ila__logo-helix-wrap {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+.ila--expanding .ila__stats {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ila__logo-letters,
+  .ila__logo-tagline,
+  .ila__logo-helix-wrap,
+  .ila__stats {
+    transition-duration: 0.01ms;
+  }
+
+  .ila__logo-helix-img {
+    animation-duration: 12s;
+  }
+}
+
+@media (max-width: 640px) {
+  .ila__logo-container {
+    width: min(380px, 90vw);
+  }
+
+  .ila__stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ila__stat-divider {
+    display: none;
+  }
+}

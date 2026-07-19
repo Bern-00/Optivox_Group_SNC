@@ -1,0 +1,29 @@
+/* ============================================
+   OPTIVOX APERTURE SVG
+   ============================================ */
+
+.optivox-aperture-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Do NOT set overflow:visible — blades must stay within the SVG box */
+}
+
+/*
+ * Spinning blades group.
+ *
+ * IMPORTANT: use transform-box:fill-box + transform-origin:center
+ * so the CSS rotation pivot is the bounding-box center of the <g>,
+ * NOT a fixed px value in CSS layout space (which would be wrong
+ * because the SVG is scaled down from its 200×200 viewBox).
+ */
+.optivox-aperture-blades--spinning {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: optivox-aperture-spin 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes optivox-aperture-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
