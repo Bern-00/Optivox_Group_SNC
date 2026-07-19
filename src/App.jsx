@@ -3,12 +3,16 @@ import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ThemeTransition from './components/ThemeTransition'
+import CrispChat from './components/CrispChat'
 import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
 import Industries from './pages/Industries'
 import Careers from './pages/Careers'
 import Contact from './pages/Contact'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
+import CookiePolicy from './pages/CookiePolicy'
 import NotFound from './pages/NotFound'
 import './App.css'
 
@@ -24,6 +28,7 @@ function App() {
   return (
     <div className="app">
       <ThemeTransition />
+      <CrispChat />
       <ScrollToTop />
       <Navbar />
       <main>
@@ -34,6 +39,9 @@ function App() {
           <Route path="/industries" element={<Industries />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

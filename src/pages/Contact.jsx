@@ -2,12 +2,11 @@ import {
   Mail,
   Phone,
   MapPin,
-  Clock,
-  ArrowRight,
   Send,
   Globe2,
 } from 'lucide-react'
 import { LinkedInIcon, TwitterIcon, FacebookIcon } from '../components/SocialIcons'
+import { SOCIAL_LINKS } from '../config/site'
 import { useState } from 'react'
 import IntroLoader from '../components/IntroLoader'
 import { EMAILJS_SERVICE, EMAILJS_KEY, EMAILJS_CONTACT_TEMPLATE as EMAILJS_TEMPLATE } from '../lib/emailjs'
@@ -27,6 +26,10 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!import.meta.env.VITE_EMAILJS_SERVICE_ID) {
+      setError('This form is not yet configured. Please email us directly at contact@optivoxgroup.com.')
+      return
+    }
     setIsLoading(true)
     setError('')
     try {
@@ -125,16 +128,22 @@ export default function Contact() {
               <div className="contact-socials-box">
                 <h4>Follow Our Progress</h4>
                 <div className="contact-socials">
-                  <a href="#" className="contact-social-link" aria-label="LinkedIn">
-                    <LinkedInIcon size={20} />
-                  </a>
-                  <a href="#" className="contact-social-link" aria-label="Twitter">
-                    <TwitterIcon size={20} />
-                  </a>
-                  <a href="#" className="contact-social-link" aria-label="Facebook">
-                    <FacebookIcon size={20} />
-                  </a>
-                  <a href="#" className="contact-social-link" aria-label="Global Support">
+                  {SOCIAL_LINKS.linkedin && (
+                    <a href={SOCIAL_LINKS.linkedin} className="contact-social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                      <LinkedInIcon size={20} />
+                    </a>
+                  )}
+                  {SOCIAL_LINKS.twitter && (
+                    <a href={SOCIAL_LINKS.twitter} className="contact-social-link" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                      <TwitterIcon size={20} />
+                    </a>
+                  )}
+                  {SOCIAL_LINKS.facebook && (
+                    <a href={SOCIAL_LINKS.facebook} className="contact-social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                      <FacebookIcon size={20} />
+                    </a>
+                  )}
+                  <a href="mailto:contact@optivoxgroup.com" className="contact-social-link" aria-label="Global Support">
                     <Globe2 size={20} />
                   </a>
                 </div>

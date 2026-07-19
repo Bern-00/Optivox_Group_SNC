@@ -1,8 +1,16 @@
 import { Link } from 'react-router-dom'
 import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react'
 import { LinkedInIcon, TwitterIcon, FacebookIcon, InstagramIcon } from './SocialIcons'
-import { useTheme } from '../context/ThemeContext'
+import { useTheme } from '../context/useTheme'
+import { SOCIAL_LINKS } from '../config/site'
 import './Footer.css'
+
+const socialIcons = [
+  { key: 'linkedin', label: 'LinkedIn', Icon: LinkedInIcon },
+  { key: 'twitter', label: 'Twitter', Icon: TwitterIcon },
+  { key: 'facebook', label: 'Facebook', Icon: FacebookIcon },
+  { key: 'instagram', label: 'Instagram', Icon: InstagramIcon },
+]
 
 const quickLinks = [
   { path: '/', label: 'Home' },
@@ -56,18 +64,19 @@ export default function Footer() {
               connecting skilled professionals with global opportunities.
             </p>
             <div className="footer__socials">
-              <a href="#" className="footer__social-link" aria-label="LinkedIn" id="social-linkedin">
-                <LinkedInIcon size={18} />
-              </a>
-              <a href="#" className="footer__social-link" aria-label="Twitter" id="social-twitter">
-                <TwitterIcon size={18} />
-              </a>
-              <a href="#" className="footer__social-link" aria-label="Facebook" id="social-facebook">
-                <FacebookIcon size={18} />
-              </a>
-              <a href="#" className="footer__social-link" aria-label="Instagram" id="social-instagram">
-                <InstagramIcon size={18} />
-              </a>
+              {socialIcons.map(({ key, label, Icon }) => SOCIAL_LINKS[key] && (
+                <a
+                  key={key}
+                  href={SOCIAL_LINKS[key]}
+                  className="footer__social-link"
+                  aria-label={label}
+                  id={`social-${key}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
             </div>
           </div>
 
@@ -123,9 +132,9 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Optivox Group. All rights reserved.
           </p>
           <div className="footer__bottom-links">
-            <a href="#" className="footer__bottom-link">Privacy Policy</a>
-            <a href="#" className="footer__bottom-link">Terms of Service</a>
-            <a href="#" className="footer__bottom-link">Cookie Policy</a>
+            <Link to="/privacy" className="footer__bottom-link">Privacy Policy</Link>
+            <Link to="/terms" className="footer__bottom-link">Terms of Service</Link>
+            <Link to="/cookie-policy" className="footer__bottom-link">Cookie Policy</Link>
           </div>
         </div>
       </div>

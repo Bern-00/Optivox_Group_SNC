@@ -252,6 +252,46 @@
 - **Fichiers** : `public/images/logo-parts/*-light.png`
 - **Resolu le** : 2026-06-14
 
+---
+
+### ERR-009 — Limite de taille des pieces jointes EmailJS (upload CV)
+- **Symptome** : Le CV ne part pas / l'email arrive tronque quand le fichier est trop volumineux.
+- **Cause** : EmailJS transmet les pieces jointes en base64 dans le corps de la requete ; le plan gratuit limite la taille totale de la requete (verifier la limite exacte du plan utilise sur dashboard.emailjs.com, generalement de l'ordre de quelques Mo). Une validation cote client a 5MB (`MAX_RESUME_SIZE` dans `Careers.jsx`) evite les echecs silencieux mais ne garantit pas que 5MB passe sur tous les plans.
+- **Solution** :
+  1. `emailjs.sendForm()` (pas `emailjs.send()`) est requis pour transmettre un `<input type="file">` — verifier que le template EmailJS cible a bien un champ piece-jointe configure pour `resume_attachment`.
+  2. Si le plan EmailJS actuel refuse au-dela d'une certaine taille, abaisser `MAX_RESUME_SIZE` en consequence dans `Careers.jsx`.
+- **Fichiers** : `src/pages/Careers.jsx`
+- **Resolu le** : 2026-07-19 (scaffold — a valider avec un vrai compte EmailJS + template)
+
+---
+
+### ERR-010 — react-refresh/only-export-components sur ThemeContext.jsx
+- **Symptome** : `Fast refresh only works when a file only exports components` sur le fichier exportant a la fois le composant `ThemeProvider` et le hook `useTheme`.
+- **Cause** : Le plugin `eslint-plugin-react-refresh` (config `reactRefresh.configs.vite`) interdit qu'un fichier de composant exporte autre chose qu'un composant — y compris un hook ou l'objet `Context` lui-meme (deplacer seulement le hook ne suffit pas si le fichier du Provider exporte encore l'objet `createContext(...)`).
+- **Solution** : Isoler l'objet Context dans son propre fichier non-JSX :
+  1. `src/context/theme-context.js` -> `export const ThemeContext = createContext(null)`
+  2. `src/context/ThemeContext.jsx` -> importe `ThemeContext` depuis ce fichier, n'exporte plus que `ThemeProvider`
+  3. `src/context/useTheme.js` -> `export function useTheme() { return useContext(ThemeContext) }`, importe depuis `theme-context.js`
+  4. Mettre a jour tous les `import { useTheme } from '../context/ThemeContext'` vers `'../context/useTheme'`
+- **Fichiers** : `src/context/theme-context.js` (nouveau), `src/context/useTheme.js` (nouveau), `src/context/ThemeContext.jsx`, + 5 consommateurs (`About.jsx`, `Footer.jsx`, `InteractiveLogoAperture.jsx`, `Navbar.jsx`, `ThemeTransition.jsx`)
+- **Resolu le** : 2026-07-19
+
+---
+
+### ERR-011 — react-hooks/set-state-in-effect dans Navbar.jsx
+- **Symptome** : `Avoid calling setState() directly within an effect` sur `setMobileOpen(false)` dans un `useEffect([location])` destine a fermer le menu mobile a chaque changement de route.
+- **Cause** : Appeler `setState` sans condition dans un effet declenche un render supplementaire evitable ; React recommande d'ajuster le state pendant le render plutot que dans un effet quand c'est un changement derive d'une prop/valeur externe (ici `location`).
+- **Solution** : Remplacer l'effet par un ajustement pendant le render (pattern officiel React "Adjusting state when a prop changes") :
+  ```js
+  const [lastPathname, setLastPathname] = useState(null)
+  if (location.pathname !== lastPathname) {
+    setLastPathname(location.pathname)
+    setMobileOpen(false)
+  }
+  ```
+- **Fichiers** : `src/components/Navbar.jsx`
+- **Resolu le** : 2026-07-19
+
 ```
 ### ERR-XXX — Titre court
 - **Symptome** : Ce que l'on observe

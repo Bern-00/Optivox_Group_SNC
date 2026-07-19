@@ -317,6 +317,8 @@
 }
 
 .team-card__avatar {
+  position: relative;
+  overflow: hidden;
   width: 80px;
   height: 80px;
   display: flex;
@@ -330,6 +332,14 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-gold);
+}
+
+.team-card__avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .team-card__name {

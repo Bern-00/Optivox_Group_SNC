@@ -20,9 +20,9 @@ const BLADE_PATH =
   'C 90 102, 86 65, 100 28 ' + // Sweep back up to start point, tapering beautifully
   'Z'
 
-export default function OptivoxLogo({ variant = 'gold', spinning = false, holeFill }) {
+export default function OptivoxLogo({ variant = 'gold', spinning = false }) {
   const idSuffix = useId().replace(/:/g, '-')
-  
+
   const gradId = `ol-grad-${variant}-${idSuffix}`
   const clipId = `ol-clip-${idSuffix}`
   const shadowId = `ol-shadow-${idSuffix}`
@@ -30,9 +30,6 @@ export default function OptivoxLogo({ variant = 'gold', spinning = false, holeFi
   const gradUrl = `url(#${gradId})`
   const clipUrl = `url(#${clipId})`
   const shadowUrl = `url(#${shadowId})`
-
-  const defaultHoleFill = variant === 'gold' ? '#050505' : '#f9f9f7'
-  const centerFill = holeFill ?? defaultHoleFill
 
   return (
     <svg

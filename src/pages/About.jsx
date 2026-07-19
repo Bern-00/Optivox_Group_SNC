@@ -5,15 +5,13 @@ import {
   Eye,
   Heart,
   Globe,
-  Users,
-  Award,
   TrendingUp,
   Lightbulb,
   Handshake,
   Sparkles,
 } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
-import { useTheme } from '../context/ThemeContext'
+import { useTheme } from '../context/useTheme'
 import OptivoxLogo from '../components/OptivoxLogo'
 import IntroLoader from '../components/IntroLoader'
 import './About.css'
@@ -51,11 +49,12 @@ const values = [
   },
 ]
 
+// photo: chemin vers une image (public/) fournie par le client — vide par defaut, fallback sur `initial`
 const team = [
-  { name: 'Alexandre Dubois', role: 'Founder & CEO', initial: 'AD' },
-  { name: 'Fatima Al-Rashid', role: 'VP of Operations', initial: 'FA' },
-  { name: 'James Okonkwo', role: 'Head of IT Staffing', initial: 'JO' },
-  { name: 'Mei Lin Chen', role: 'Director of AI Training', initial: 'MC' },
+  { name: 'Alexandre Dubois', role: 'Founder & CEO', initial: 'AD', photo: '' },
+  { name: 'Fatima Al-Rashid', role: 'VP of Operations', initial: 'FA', photo: '' },
+  { name: 'James Okonkwo', role: 'Head of IT Staffing', initial: 'JO', photo: '' },
+  { name: 'Mei Lin Chen', role: 'Director of AI Training', initial: 'MC', photo: '' },
 ]
 
 const milestones = [
@@ -238,7 +237,7 @@ export default function About() {
             {team.map((member, i) => (
               <div key={i} className="team-card" id={`team-member-${i}`}>
                 <div className="team-card__avatar">
-                  <span>{member.initial}</span>
+                  {member.photo ? <img src={member.photo} alt={member.name} /> : <span>{member.initial}</span>}
                 </div>
                 <h3 className="team-card__name">{member.name}</h3>
                 <p className="team-card__role">{member.role}</p>

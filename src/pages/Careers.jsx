@@ -1,17 +1,14 @@
-import { Link } from 'react-router-dom'
 import {
   Briefcase,
   MapPin,
   Clock,
   ArrowRight,
   Globe,
-  Award,
   HeartHandshake,
   DollarSign,
-  Coffee,
   BookOpen,
 } from 'lucide-react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { EMAILJS_SERVICE, EMAILJS_KEY, EMAILJS_CAREERS_TEMPLATE as EMAILJS_TEMPLATE } from '../lib/emailjs'
 import OptivoxLogo from '../components/OptivoxLogo'
 import './Careers.css'
@@ -83,9 +80,12 @@ export default function Careers() {
     name: '',
     email: '',
     role: 'IT Support & Systems',
-    resumeUrl: '',
+    resumeFileName: '',
     coverLetter: '',
   })
+  const formRef = useRef(null)
+
+  const MAX_RESUME_SIZE = 5 * 1024 * 1024
 
   const categories = ['All', 'IT Support & Systems', 'Customer Service & CSR', 'Interpretation Services', 'AI Training Projects']
 
@@ -93,19 +93,30 @@ export default function Careers() {
     ? openPositions
     : openPositions.filter(p => p.category === selectedCategory)
 
+  const handleResumeChange = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    if (file.size > MAX_RESUME_SIZE) {
+      setError('This file exceeds 5MB. Please choose a smaller file.')
+      e.target.value = ''
+      setFormData({ ...formData, resumeFileName: '' })
+      return
+    }
+    setError('')
+    setFormData({ ...formData, resumeFileName: file.name })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!import.meta.env.VITE_EMAILJS_SERVICE_ID) {
+      setError('Applications are not yet configured. Please email us directly at contact@optivoxgroup.com.')
+      return
+    }
     setIsLoading(true)
     setError('')
     try {
       const { default: emailjs } = await import('@emailjs/browser')
-      await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
-        from_name:    formData.name,
-        from_email:   formData.email,
-        role:         formData.role,
-        resume_url:   formData.resumeUrl,
-        cover_letter: formData.coverLetter,
-      }, EMAILJS_KEY)
+      await emailjs.sendForm(EMAILJS_SERVICE, EMAILJS_TEMPLATE, formRef.current, EMAILJS_KEY)
       setSubmitted(true)
     } catch {
       setError('Failed to send. Please try again or contact us directly.')
@@ -200,7 +211,12 @@ export default function Careers() {
                   <div className="position-item__salary">{pos.salary}</div>
                 </div>
                 <p className="position-item__desc">{pos.desc}</p>
-                <a href="#apply-form" className="btn btn-secondary" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>
+                <a
+                  href="#apply-form"
+                  className="btn btn-secondary"
+                  style={{ padding: '8px 20px', fontSize: '0.85rem' }}
+                  onClick={() => setFormData((prev) => ({ ...prev, role: pos.category }))}
+                >
                   Apply Now <ArrowRight size={14} />
                 </a>
               </div>
@@ -238,13 +254,14 @@ export default function Careers() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="apply-form-element">
+              <form ref={formRef} onSubmit={handleSubmit} className="apply-form-element">
                 <div className="form-group-row">
                   <div className="form-group">
                     <label htmlFor="name">Full Name</label>
                     <input
                       type="text"
                       id="name"
+                      name="from_name"
                       required
                       placeholder="John Doe"
                       value={formData.name}
@@ -256,6 +273,7 @@ export default function Careers() {
                     <input
                       type="email"
                       id="email"
+                      name="from_email"
                       required
                       placeholder="john@example.com"
                       value={formData.email}
@@ -269,6 +287,7 @@ export default function Careers() {
                     <label htmlFor="role">Preferred Domain</label>
                     <select
                       id="role"
+                      name="role"
                       value={formData.role}
                       onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                     >
@@ -279,15 +298,18 @@ export default function Careers() {
                     </select>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="resume">Resume/Portfolio Link</label>
+                    <label htmlFor="resume">Resume/CV (PDF, DOC, DOCX — max 5MB)</label>
                     <input
-                      type="url"
+                      type="file"
                       id="resume"
+                      name="resume_attachment"
                       required
-                      placeholder="https://linkedin.com/in/username"
-                      value={formData.resumeUrl}
-                      onChange={(e) => setFormData({ ...formData, resumeUrl: e.target.value })}
+                      accept=".pdf,.doc,.docx"
+                      onChange={handleResumeChange}
                     />
+                    {formData.resumeFileName && (
+                      <p className="form-file-name">{formData.resumeFileName}</p>
+                    )}
                   </div>
                 </div>
 
@@ -295,6 +317,7 @@ export default function Careers() {
                   <label htmlFor="coverLetter">Why do you want to join Optivox?</label>
                   <textarea
                     id="coverLetter"
+                    name="cover_letter"
                     rows="5"
                     placeholder="Briefly describe your experience and skills..."
                     value={formData.coverLetter}

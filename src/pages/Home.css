@@ -178,6 +178,14 @@
   color: var(--text-gold);
 }
 
+.hero__trusted-logo img {
+  height: 24px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  filter: grayscale(1);
+}
+
 /* Hero Visual — seamless container for InteractiveLogoAperture */
 .hero__visual {
   display: flex;
@@ -474,6 +482,8 @@
 }
 
 .testimonial-card__avatar {
+  position: relative;
+  overflow: hidden;
   width: 44px;
   height: 44px;
   display: flex;
@@ -486,6 +496,14 @@
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-gold);
+}
+
+.testimonial-card__avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .testimonial-card__name {

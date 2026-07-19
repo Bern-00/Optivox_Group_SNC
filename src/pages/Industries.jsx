@@ -6,7 +6,6 @@ import {
   Briefcase,
   BrainCircuit,
   Globe,
-  ArrowUpRight,
   ShieldAlert,
   Database,
   ArrowRight,

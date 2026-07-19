@@ -120,29 +120,39 @@ const whyUs = [
   },
 ]
 
+// photo: chemin vers une image (public/) fournie par le client — vide par defaut, fallback sur l'initiale du nom
 const testimonials = [
   {
     name: 'Sarah Mitchell',
     role: 'CTO, TechVantage Inc.',
     text: 'Optivox transformed our IT operations. Their sys admins integrated seamlessly and our downtime dropped by 85%. Truly exceptional service.',
     rating: 5,
+    photo: '',
   },
   {
     name: 'David Chen',
     role: 'VP Operations, GlobalReach',
     text: 'The CSR team from Optivox exceeded every KPI we set. Customer satisfaction scores are at an all-time high. Outstanding partner.',
     rating: 5,
+    photo: '',
   },
   {
     name: 'Maria Santos',
     role: 'Director, AI Solutions Lab',
     text: 'Their AI training specialists delivered incredible data quality. Our model accuracy improved significantly. Highly recommended.',
     rating: 5,
+    photo: '',
   },
 ]
 
+// logo: chemin vers une image de logo partenaire (public/) fournie par le client — vide par defaut, fallback sur le nom en texte
 const trustedLogos = [
-  'TechVantage', 'GlobalReach', 'NexGen AI', 'CloudScale', 'DataPrime', 'InnovateCo',
+  { name: 'TechVantage', logo: '' },
+  { name: 'GlobalReach', logo: '' },
+  { name: 'NexGen AI', logo: '' },
+  { name: 'CloudScale', logo: '' },
+  { name: 'DataPrime', logo: '' },
+  { name: 'InnovateCo', logo: '' },
 ]
 
 export default function Home() {
@@ -214,9 +224,9 @@ export default function Home() {
             <div className="hero__trusted">
               <span className="hero__trusted-label">Trusted by leading companies</span>
               <div className="hero__trusted-logos">
-                {trustedLogos.map((name) => (
-                  <div key={name} className="hero__trusted-logo">
-                    {name}
+                {trustedLogos.map((item) => (
+                  <div key={item.name} className="hero__trusted-logo">
+                    {item.logo ? <img src={item.logo} alt={item.name} /> : item.name}
                   </div>
                 ))}
               </div>
@@ -349,7 +359,7 @@ export default function Home() {
                 <p className="testimonial-card__text">&ldquo;{t.text}&rdquo;</p>
                 <div className="testimonial-card__author">
                   <div className="testimonial-card__avatar">
-                    {t.name[0]}
+                    {t.photo ? <img src={t.photo} alt={t.name} /> : t.name[0]}
                   </div>
                   <div>
                     <div className="testimonial-card__name">{t.name}</div>

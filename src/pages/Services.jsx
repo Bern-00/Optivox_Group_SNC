@@ -40,7 +40,7 @@ const services = [
       { icon: <Clock size={20} />, text: '24/7 Helpdesk Support' },
       { icon: <Settings size={20} />, text: 'Cloud & Network Administration' },
     ],
-    color: '#4ade80',
+    color: 'var(--color-it)',
   },
   {
     id: 'customer-service',
@@ -54,7 +54,7 @@ const services = [
       { icon: <Mail size={20} />, text: 'Email Support & Ticketing' },
       { icon: <BarChart size={20} />, text: 'KPI-Driven Performance' },
     ],
-    color: '#60a5fa',
+    color: 'var(--color-csr)',
   },
   {
     id: 'interpretation',
@@ -68,7 +68,7 @@ const services = [
       { icon: <Globe2 size={20} />, text: '50+ Languages Available' },
       { icon: <BookOpen size={20} />, text: 'Industry-Specialized Interpreters' },
     ],
-    color: '#f59e0b',
+    color: 'var(--color-interp)',
   },
   {
     id: 'ai-training',
@@ -82,7 +82,7 @@ const services = [
       { icon: <Database size={20} />, text: 'Dataset Curation & QA' },
       { icon: <FileCheck size={20} />, text: 'Content Moderation' },
     ],
-    color: '#a78bfa',
+    color: 'var(--color-ai)',
   },
 ]
 

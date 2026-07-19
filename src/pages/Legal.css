@@ -1,0 +1,25 @@
+.legal-page {
+  padding-top: 140px;
+  padding-bottom: var(--section-padding);
+  min-height: 60vh;
+}
+
+.legal-page__updated {
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+  margin-bottom: 32px;
+}
+
+.legal-page__placeholder {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 24px 28px;
+  margin-top: 24px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.legal-page__placeholder strong {
+  color: var(--text-gold);
+}

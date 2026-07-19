@@ -1,16 +1,32 @@
-# React + Vite
+# Optivox Group — Site vitrine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19 (JSX) + Vite + React Router. Voir `implementation.md` pour l'etat du backlog et `errors.md` pour les erreurs deja rencontrees.
 
-Currently, two official plugins are available:
+## Demarrage
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npm run build       # -> ./dist
+npm run lint
+```
 
-## React Compiler
+> Sur Windows, si `npm run` echoue avec une erreur de policy PowerShell, utiliser `npm.cmd run <script>`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Configurer les formulaires (EmailJS)
 
-## Expanding the ESLint configuration
+Les formulaires Contact et Careers utilisent [EmailJS](https://www.emailjs.com/) (aucun backend requis). Sans configuration, ils affichent un message clair invitant a contacter `contact@optivoxgroup.com` directement — ils n'echouent pas silencieusement.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Pour les activer :
+
+1. Creer un compte sur [dashboard.emailjs.com](https://dashboard.emailjs.com/admin)
+2. Connecter un service email (Gmail, Outlook, etc.) -> noter le **Service ID**
+3. Creer **2 templates** : un pour Contact, un pour Careers (candidatures) -> noter les **Template ID**
+   - Le template Careers doit accepter une piece jointe (`resume_attachment`, envoyee via `emailjs.sendForm`) — verifier la limite de taille du plan EmailJS utilise (voir `errors.md`, la limite cote client est fixee a 5MB)
+4. Recuperer la **Public Key** dans Account > API Keys
+5. Copier `.env.example` vers `.env.local` et remplir les 4 valeurs
+6. Redemarrer `npm run dev` (les variables `VITE_*` ne sont lues qu'au demarrage)
+
+## Contenu en attente du client
+
+Voir `implementation.md` (section "bloque client") pour la liste a jour : URLs reseaux sociaux (`src/config/site.js`), textes juridiques (`src/pages/Privacy.jsx`, `Terms.jsx`, `CookiePolicy.jsx`), photos equipe et logos partenaires.
